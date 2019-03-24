@@ -1,0 +1,43 @@
+/*body {*/
+/*background-image: url("/static/image/background.jpg");*/
+/*!*background-repeat: repeat;*!*/
+/*background-attachment: fixed;*/
+/*}*/
+
+input.button_size {
+    width: 100px;
+    height: 30px;
+}
+
+.center_index {
+    height: 40%;
+    width: 25%;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+}
+
+.center_others {
+    height: 40%;
+    width: 25%;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -200px;
+}
+
+.header {
+    overflow: hidden;
+    background-color: lightcyan;
+    padding: 20px 10px;
+}
+
+/*input {*/
+    /*width: 50%;*/
+    /*margin-bottom: 20px;*/
+/*}*/
