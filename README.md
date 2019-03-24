@@ -9,5 +9,7 @@ Also, Login, Registration is implemented in this project for maintaining session
 It also allows the user to rate the quote from 1-5.
 
 Technologies: JavaScript, Jquery, Ajax, Html, Css for scripting. 
+
 Framework: Django
+
 Database: SQLite
