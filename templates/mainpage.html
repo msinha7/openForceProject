@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{#{% block title %}OpenForce Project{% endblock %}#}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#showRightSize').click(function () {
+                var selectedRadio = $('input[type="radio"]:checked');
+                showRandomSizeQuotes(selectedRadio.val()).then((result) => {
+                    var sid = document.getElementById("sessionID").innerText;
+                    var un = document.getElementById("username").innerText;
+
+                    $.ajax({
+                        url: 'getRatingsDB',
+                        type: 'GET',
+                        data: {
+                            'quote': result,
+                            'session': sid,
+                            'uname': un
+                        },
+                        //dataType:'json',
+                        success : function(data) {
+                            console.log("TEST AJAX getR_DB :: " + data);
+                        },
+                        error: function (request) {
+                            //alert("Request: "+JSON.stringify(request));
+                        }
+                    });
+
+                    console.log("TEST get AVG :: | {{ avgrating }} | {{ israted }} |");
+
+                    var innerhtml = result;
+                    $('#showquote').html(innerhtml);
+
+                    innerhtml = "<label id='labelQuote'> Rate the Quote : </label>" +
+                        "<select id='ratingID' name='rating'>" +
+                        "<option selected='selected' value='1'>1</option>" +
+                        "<option value='2'>2</option>" +
+                        "<option value='3'>3</option>" +
+                        "<option value='4'>4</option>" +
+                        "<option value='5'>5</option>" +
+                        "</select>";
+                    $('#qRates').html(innerhtml);
+
+                    var x = document.getElementById("quotebox");
+                    x.style.display = "block";
+                    x = document.getElementById("rateQuote");
+                    x.style.display = "block";
+                    x = document.getElementById("yourRate");
+                    x.style.display = "none";
+                    //call getRatingsDB to get the average ratings of the quote
+                    //and append to the average Rating div
+                });
+                console.log("In HTML :: " + result);
+
+            });
+
+            $('#rate').click(function () {
+                var e = document.getElementById("ratingID");
+                var rate = e.options[e.selectedIndex].value;
+                var x = document.getElementById("rateQuote");
+                x.style.display = "none";
+                $('#yourRate').html("You have rated this Quote: " + rate);
+                x = document.getElementById("yourRate");
+                x.style.display = "block";
+                console.log("Rate Test :: " + rate);
+                console.log("Quote test :: " + result);
+
+
+                var sid = document.getElementById("sessionID").innerText;
+                var un = document.getElementById("username").innerText;
+
+                console.log("SID::: " + sid);
+
+                $.ajax({
+                    url: 'saveDB',
+                    type: 'GET',
+                    data: {
+                        'rating': rate,
+                        'quote': result,
+                        'session': sid,
+                        'uname': un
+                    },
+
+                    error: function (request) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+
+            });
+
+            {#$('#averageRating').click(function () {#}
+            {#    var sid = document.getElementById("sessionID").innerText;#}
+            {#    var un = document.getElementById("username").innerText;#}
+            {##}
+            {#        $.ajax({#}
+            {#            url: 'getRatingsDB',#}
+            {#            type: 'GET',#}
+            {#            data: {#}
+            {#                'quote': result,#}
+            {#                'session':  sid,#}
+            {#                'uname': un#}
+            {#            },#}
+            {#            //dataType:'json',#}
+            {#            // success : function(data) {},#}
+            {#            error: function (request) {#}
+            {#                //alert("Request: "+JSON.stringify(request));#}
+            {#            }#}
+            {#        });#}
+            {#    }#}
+            {#);#}
+
+        });
+    </script>
+
+    <div style="overflow: hidden">
+        <div style="float: left; padding-right: .5em;">
+            <u><font size="4">logged in as user "{{ user.username }}"</font></u>
+            <span></span>
+            {#                <font size="4">Current Session Login Time: {{ user.last_login }}!</font>#}
+        </div>
+        <div style="float: right">
+            <form action="logout" style="float: left; padding-right: .5em; padding-left: .5em;">
+                <input type="submit" value="LogOut" style="float: right" class="button_size"/>
+            </form>
+        </div>
+    </div>
+
+    <br><br><br>
+
+    <div id='RightSizeSwag' style="margin-left: 30%; margin-top: 2%">
+        Choose size of the quotes || {{ sessionID }} || {{ sessionExpire }} || <br>
+        <input type='radio' id='smallRadio' name='radioBttn' value='small'> Small<br>
+        <input type='radio' id='mediumRadio' name='radioBttn' value='medium'> Medium<br>
+        <input type='radio' id='largeRadio' name='radioBttn' value='large'>Large <br>
+        <input type='radio' id='anyRadio' name='radioBttn' value='any'>Any Length<br>
+        <button id='showRightSize' value='button' name='btn'> Get the right sized quotes</button>
+    </div>
+    <br><br>
+    <label id="sessionID" style="display: none">{{ sessionID }}</label>
+    <label id="username" style="display: none">{{ user.username }}</label>
+    <div id='quotebox' align='center' style="display: none">
+        <hr>
+        <h3>Quote</h3>
+        <div id='showquote'>
+        </div>
+        <br>
+        <div id="avgIDQuote">
+            {% if israted %}
+
+            {% endif %}
+        </div>
+        <div id='rateQuote' align='center' style="display: none">
+            <div id="qRates">
+
+            </div>
+            <br>
+            <button id='rate' value='button' name='btn'> Submit Rating</button>
+        </div>
+        <div id='yourRate' align='center' style="display: none">
+
+        </div>
+        <br><br>
+        <hr>
+    </div>
+    <br>
+    <div id="avgRatingDiv">
+
+    </div>
+{% endblock %}
