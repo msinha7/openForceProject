@@ -7,3 +7,7 @@ Client can also rate the quote on a scale of 1 to 5.
 Also, Login, Registration is implemented in this project for maintaining session of an user .
 
 It also allows the user to rate the quote from 1-5.
+
+Technologies: JavaScript, Jquery, Ajax, Html, Css for scripting. 
+Framework: Django
+Database: SQLite
