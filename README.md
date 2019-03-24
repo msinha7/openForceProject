@@ -1,4 +1,4 @@
-Functionalities of my project :
+Functionalities :
 
 Using the “Ron Swanson Quotes API" , the project will get random quote on demand. Client can also demand for quote with length within a limit [Small (<5), Medium (5-12), Large(>12)]
 
